@@ -7,10 +7,28 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
 
   <style>
+  * {
+    box-sizing: border-box;;
+  }
+  li {
+    border: 1px solid gray;
+    width: 90%;
+    overflow:  hidden;
+    margin: 10px;
+    padding: 4px;
+  }
+  .bookmark_name {
+
+  }
+  .bookmark_url {
+
+  }
   .actions {
     /*display: none;*/
     width: 40%;
     float: right;
+    padding: 4px;
+    margin: 4px;
   }
   </style>
 </head>
@@ -37,7 +55,7 @@
             },
             render: function(){
               var url = this.model.get('url');
-              $(this.el).html('<span><label>'+this.model.get('name')+'</label>: <a href="'+url+'">'+url+'</a><span class="actions"><a class="edit">EDIT</a><a class="move">MOVE</a><a class="remove">DELETE</a></span></span>');
+              $(this.el).html('<span class="bookmark"><label class="bookmark_name">'+this.model.get('name')+'</label>- <a class="bookmark_url" href="'+url+'">'+url+'</a></span><span class="actions"><a class="edit">EDIT</a><a class="move">MOVE</a><a class="remove">DELETE</a></span>');
               return this;
             }
        });

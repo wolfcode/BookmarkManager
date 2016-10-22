@@ -1,0 +1,180 @@
+
+ * {
+    box-sizing: border-box;;
+  } 
+
+  html, body {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
+ }
+  .fh
+  {
+      height: 100%  !important;
+  }
+
+  .fw
+  {
+      width: 100%  !important; 
+  }
+
+  .actions {
+    /*display: none;*/
+    width: 40%;
+    float: right;
+    padding: 4px;
+    margin: 4px;
+  }
+
+  .fx
+  {
+      display: flex;
+  }
+
+  .cl
+  {
+      flex-direction: column;
+  }
+
+  div#sidebar {
+    
+    padding: 0px !important; 
+    width: 308px;
+    z-index: 99;
+    box-shadow: 0px 2px 17px 0px gray;
+  }
+
+  #addBookmarkItem
+  {
+      position: relative;
+      top: 8px; 
+      left: 8px; 
+  }
+
+  .mright54
+  {
+    margin-right: 54px; 
+  }
+
+  .pad10
+  {
+      padding: 10px;
+  }
+
+  .pad0
+  {
+      padding: 0px !important; 
+  }
+
+  .actionBar
+  {
+     padding: 5px 0px 0px 20px;
+     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+     height: 65px;
+     margin: 0px;
+  }
+
+  .pright24
+  {
+      padding-right: 24px; 
+  }
+
+  .fx2
+  {
+      flex-grow: 2;
+  }
+
+  .inputBox
+  {
+      width: 400px; 
+      align-items: center; 
+      position: relative;
+      top: 10px;
+      left: 20px; 
+  }
+
+  .searchInputBox
+  {
+        /*border: 1px solid #e2e2e2 !important;*/
+        /*background: rgba(255, 255, 255, 0.93) !important;*/
+        height: 40px !important;
+        padding-left: 8px !important;  
+  } 
+
+
+::-webkit-input-placeholder {
+   color: #fff;
+}
+::-moz-placeholder {
+   color: #fff;  
+   opacity: 1;
+}
+:-ms-input-placeholder {  
+   color: #fff;  
+}
+input {
+  margin: 0;
+}
+
+
+.searchButton
+{
+    position: relative;
+    top: -10px;
+    height: 40px;
+     
+}
+
+nav
+{
+    background: orange;
+}
+
+.jctr
+{
+    justify-content: center;
+}
+
+.pad20
+{
+    padding: 20px;
+}
+
+nav .nav-wrapper
+{
+    padding-left: 20px;
+}
+
+.w90{
+    width: 90%;
+}
+
+ul#bookmarkListView {
+    overflow: auto !important;
+    height: 100%;
+}
+
+.collection .collection-item.own:last-child
+{
+    border-bottom: 1px solid #e0e0e0;
+}
+.collection .collection-item.own
+{
+    border: 1px solid #e0e0e0;
+    margin: 21px 28px 8px 28px;
+}
+
+.collection
+{
+    margin: 0px;
+}
+
+.row.own {
+    margin: -14px;
+}
+
+.bookMarkTitle
+{
+    position: relative;
+    top: -15px;
+}

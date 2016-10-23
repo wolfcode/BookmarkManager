@@ -18,8 +18,10 @@ MilesBM.Views.BookmarkView = Backbone.View.extend
     {
         var bItem = $(e.target).parent().parent().parent().find('.beditItem'); 
         var mode = ($(".collection-item > .title").attr('contentEditable') === "true")
-        $(bItem).attr('contentEditable',!mode);  
+        $(bItem).attr('contentEditable',!mode);
+        $(".collection-item > .title").focus();  
     },       
+
     editBookmarkURL : function(e) 
     {
 

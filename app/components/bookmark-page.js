@@ -23,20 +23,25 @@ var FolderView = Backbone.View.extend
             'click #addNewBookmark' : 'addNewBookmark',
             'click #addNewFolderItem' : 'addNewFolder',
             'click #submitNewFolderItem' : 'addNewFolderItem',
-            'blur .collection-item > .title' : 'editBookmarkTitle'  
+               
         },        
+        
+        deleteFolder : function()
+        {  
+            this.model.destroy(); 
+        },
         addNewFolder : function()
         { 
-            console.log(" CSK addFolder item"); 
+            console.log(" CSK addFolder item",$('#addFolderModalForm')); 
             $('#addFolderModalForm').openModal();  
         },
         addNewFolderItem : function()
         {
             this.newFolderItem = new MilesBM.Model.Folder();
-            folderCollection.add(this.newFolderItem); 
+            folderCollection.create(this.newFolderItem);
             console.log(" CSK this.newFolderItem ",this.newFolderItem, folderCollection);    
- 
-        },              
+
+        },
         addNewBookmark : function()
         { 
 
@@ -64,6 +69,7 @@ var FolderView = Backbone.View.extend
             _.bindAll(this, 'render', 'addBookmark', 'appendBookmark');
 
             this.listenTo(bookmarkcollection, 'add', this.appendBookmark);
+            this.listenTo(folderCollection, 'add', this.appendFolderItem);
 
             this.render();
         },
@@ -107,27 +113,11 @@ var FolderView = Backbone.View.extend
         },        
         appendBookmark: function(item)
         {
-
-            
-            console.log(" appendBookmark ",item); 
-            // console.log(" CSK item is here ",this.isEditMode); 
-            if(!this.isEditMode)
-            {  
                 var itemView = new MilesBM.Views.BookmarkView({ 
                     model: item 
                 });
 
                 $('#bookmarkListView', this.el).append(itemView.render().el);
-
-                
-            }else
-            {
-                //   item.save({title: this.currentItem.attributes.name});  
-                // console.log(" this.currentItem is ",this.currentItem, this.collection);  
-                // // this.currentItem.save(); 
-                // $("#bookmarkpageurl").val(this.currentItem.attributes.name); 
-                // $("#bookmarkpagename").val(this.currentItem.attributes.url);   
-            }
               
         },
         appendFolderItem : function(item)

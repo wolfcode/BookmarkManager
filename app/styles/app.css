@@ -164,6 +164,11 @@ ul#bookmarkListView {
     margin: 21px 28px 8px 28px;
 }
 
+.collection .collection-item.own > p
+{
+    width: 60%;
+}
+
 .collection
 {
     margin: 0px;

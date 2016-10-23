@@ -1,15 +1,17 @@
 MilesBM.Collections.Bookmark = Backbone.Collection.extend
 ({
-        model: MilesBM.Model.Bookmark,        
+        model: MilesBM.Model.Bookmark,
 
 });
 
 MilesBM.Collections.Folder = Backbone.Collection.extend
 ({
-        model: MilesBM.Model.Folder,        
+        model: MilesBM.Model.Folder,
 
 });
 
+var bookmarkcollection = new MilesBM.Collections.Bookmark;
+var folderCollection = new MilesBM.Collections.Folder;
 
 var FolderView = Backbone.View.extend
 ({
@@ -17,40 +19,28 @@ var FolderView = Backbone.View.extend
         events: 
         {
             'click #addBookmarkItem': 'addBookmark',  
-            'click #editBookmarkItem' : 'openEditBookmarkModal',
-            'click #deleteBookmarkItem' : 'deleteBookmarkItem',
-            'input #searchBookmarkInputBox' : 'searchBookmarks',
+            'click #deleteBookmarkItem' : 'deleteBookmarkItem',                        
             'click #addNewBookmark' : 'addNewBookmark',
             'click #addNewFolderItem' : 'addNewFolder',
             'click #submitNewFolderItem' : 'addNewFolderItem',
-             'dblclick .collection-item > .title' : 'changeMode',
             'blur .collection-item > .title' : 'editBookmarkTitle'  
-        },
+        },        
         addNewFolder : function()
-        {
+        { 
             console.log(" CSK addFolder item"); 
             $('#addFolderModalForm').openModal();  
         },
         addNewFolderItem : function()
         {
             this.newFolderItem = new MilesBM.Model.Folder();
-            this.folderCollection.add(this.newFolderItem); 
-            console.log(" CSK this.newFolderItem ",this.newFolderItem, this.folderCollection);    
+            folderCollection.add(this.newFolderItem); 
+            console.log(" CSK this.newFolderItem ",this.newFolderItem, folderCollection);    
  
-        },
-        changeMode : function(e) 
-        {
-            var mode = ($(".collection-item > .title").attr('contentEditable') === "true")
-            $(e.target).attr('contentEditable',!mode);
-        },
-        editBookmarkTitle  : function(e) 
-        {
-                console.log(" editBookmarkTitle is here ",$(e.target), $(e.target).val(), this.newItem);
-                this.newItem.set({name:$(e.target).text()}); 
-        },
+        },              
         addNewBookmark : function()
         { 
-            
+
+                
             this.newItem = new MilesBM.Model.Bookmark();
 
             this.currentItem =this.newItem;
@@ -62,30 +52,18 @@ var FolderView = Backbone.View.extend
             this.newItem.set({
                 url: url,
                 name : name
-            });
-            this.collection.add(this.newItem);
+            }); 
+
+            bookmarkcollection.create(this.newItem);     
+
             $("#bookmarkpageurl").val("");
             $("#bookmarkpagename").val("");
-        },
-        searchBookmarks : function(e)
-        {
-            var inputVal = $(e.target).val();
-            this.collection.filter(function(obj,item,arr)
-            {
-                console.log(" CSK master ",obj.attributes.name, " :: ",inputVal);
-            })
-            // console.log(" Bookmark item ",inputVal,this);   
-        },
+        },        
         initialize: function()
         { 
             _.bindAll(this, 'render', 'addBookmark', 'appendBookmark');
-            
-            console.log(" initialize ",this, this.model); 
 
-            this.collection = new MilesBM.Collections.Bookmark();
-            this.folderCollection = new MilesBM.Collections.Folder();             
-            this.collection.bind('add', this.appendBookmark);
-            this.folderCollection.bind('add', this.appendFolderItem);
+            this.listenTo(bookmarkcollection, 'add', this.appendBookmark);
 
             this.render();
         },
@@ -96,7 +74,7 @@ var FolderView = Backbone.View.extend
 
             $(this.el).append("<ul class='collection bookmarkListView blue-grey lighten-5' id='bookmarkListView'></ul>"); 
 
-            _(this.collection.models).each(function(item)
+            _(bookmarkcollection.models).each(function(item)
             {
                 self.appendBookmark(item);
             }, this);
@@ -111,7 +89,7 @@ var FolderView = Backbone.View.extend
         openEditBookmarkModal : function(e)
         {
             var elementID = e.target.id;
-            var obj = this.collection.find({cid:elementID});
+            var obj = bookmarkcollection.find({cid:elementID});
             this.isEditMode = true; 
 
             this.currentItem = obj;
@@ -125,26 +103,30 @@ var FolderView = Backbone.View.extend
         },
         deleteBookmarkItem : function()
         {
-            $('#deleteBookmarkModal').openModal(); 
+            // $('#deleteBookmarkModal').openModal(); 
         },        
         appendBookmark: function(item)
         {
 
             
-            console.log(" CSK item is here ",this.isEditMode); 
+            console.log(" appendBookmark ",item); 
+            // console.log(" CSK item is here ",this.isEditMode); 
             if(!this.isEditMode)
-            {
+            {  
                 var itemView = new MilesBM.Views.BookmarkView({ 
                     model: item 
                 });
 
                 $('#bookmarkListView', this.el).append(itemView.render().el);
+
+                
             }else
             {
-                console.log(" this.currentItem is ",this.currentItem, this.collection);  
-                // this.currentItem.save(); 
-                $("#bookmarkpageurl").val(this.currentItem.attributes.name);
-                $("#bookmarkpagename").val(this.currentItem.attributes.url); 
+                //   item.save({title: this.currentItem.attributes.name});  
+                // console.log(" this.currentItem is ",this.currentItem, this.collection);  
+                // // this.currentItem.save(); 
+                // $("#bookmarkpageurl").val(this.currentItem.attributes.name); 
+                // $("#bookmarkpagename").val(this.currentItem.attributes.url);   
             }
               
         },
@@ -156,7 +138,7 @@ var FolderView = Backbone.View.extend
             });
 
             $('#bookmarkListView', this.el).append(itemView.render().el);
-        } 
+      } 
 });
 
 var listView = new FolderView();
